@@ -1,0 +1,185 @@
+---
+title: "IMR Matchmaking"
+author: "Aaron Angeles"
+date: "6/29/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Importing Database
+```{r}
+getwd()
+collegedata <- read.csv(file = "IMRCOLLEGEDATA.csv", header = T, stringsAsFactors = F)
+
+```
+
+# Distribution of Tuition (In-State)
+
+```{r}
+collegedata$tuition_in <- as.numeric(collegedata$tuition_in)
+tuition_instate1 <- collegedata$tuition_in[c(-581, -1069, -1156)]
+
+
+hist(tuition_instate1, main="Histogram of Tuition (In-State)", xlab="Tuition (In-State)", labels=T, ylim = c(0, 700))
+
+quantile(tuition_instate1, probs= seq(0, 1, by = .05), na.rm = T)
+```
+
+# Distribution of Tuition (Out of State)
+
+```{r}
+collegedata$tuition_out <-as.numeric(collegedata$tuition_out)
+tuition_outstate1 <- collegedata$tuition_out[c(-581, -1069, -1156)]
+
+hist(tuition_outstate1, main = "Histogram of Tuition (Out-State)", xlab = "Tuition (Out-State),", labels = T, xlim = c(0,60000), ylim = c(0, 700))
+
+quantile(tuition_outstate1, probs= seq(.05, .95, by = .05), na.rm=T)
+```
+
+# Distribution of Acceptance Rate
+
+```{r}
+collegedata$accept_rate <- as.numeric(collegedata$accept_rate)
+accept_rate1 <- collegedata$accept_rate[c(-3, -10, -14, -63, -158, -164, -504, -789, -856, -899, -905, -977, -1349, -1350, -1352, -1544, -1972)]
+
+hist(accept_rate1, main = "Histogram of Acceptance Rate", xlab = "Acceptance Rate", labels =T, ylim=c(0,800))
+
+quantile(accept_rate1, probs= seq(0, 1, by = .01), na.rm =T)
+```
+
+
+# Distribution of Avg ACT, 25%tile, 75%tile ACT
+
+```{r}
+
+#AVG ACT
+collegedata$avg_act_comp <- as.numeric(collegedata$avg_act_comp)
+avg_act0 <- collegedata$avg_act_comp
+avg_act0 <- na.omit(avg_act0)
+
+#25 PERCENTILE ACT
+collegedata$act_25 <- as.numeric(collegedata$act_25)
+act_25_0 <- collegedata$act_25
+act_25_0 <- na.omit(act_25_0)
+
+#75 PERCENTILE ACT
+collegedata$act_75 <- as.numeric(collegedata$act_75)
+act_75_0 <- collegedata$act_75
+act_75_0 <- na.omit(act_75_0)
+
+hist(avg_act0, main="Histogram of Average Composite ACT", xlab="Average Composite ACT", xlim=c(10,36), ylim =c(0,400), labels =T)
+hist(act_25_0, main ="Histogram of 25 Percentile ACT", xlab = "25 Percentile ACT", xlim = c(10,36), ylim =c(0,400),labels=T)
+hist(act_75_0, main ="Histogram of 75 Percentile ACT", xlab = "75 Percentile ACT", xlim = c(10,36), ylim =c(0,400),labels=T)
+
+
+quantile(avg_act0, probs= seq(0, 1, by = .1), na.rm =T)
+quantile(act_25_0, probs= seq(.1, .9, by = .1), na.rm =T)
+quantile(act_75_0, probs= seq(.1, .9, by = .1), na.rm =T)
+```
+# Distribution of AVG SAT, 25%tile, 75%tile SAT
+
+```{r}
+#AVG SAT
+collegedata$avg_sat_1 <- as.numeric(collegedata$avg_sat_1)
+avg_sat0 <- collegedata$avg_sat_1
+avg_sat0 <- na.omit(avg_sat0)
+
+#25 PERCENTILE SAT
+collegedata$sat_25 <- as.numeric(collegedata$sat_25)
+sat_25_0 <- collegedata$sat_25
+sat_25_0 <- na.omit(sat_25_0)
+
+#75 PERCENTILE SAT
+collegedata$sat_75 <- as.numeric(collegedata$sat_75)
+sat_75_0 <- collegedata$sat_75
+sat_75_0 <- na.omit(sat_75_0)
+
+hist(avg_sat0, main="Histogram of Average SAT", xlab="Average SAT", xlim=c(400, 1600), ylim =c(0,400), labels =T)
+hist(sat_25_0, main ="Histogram of 25 Percentile SAT", xlab = "25 Percentile SAT", xlim = c(500, 1600), ylim =c(0,400),labels=T)
+hist(sat_75_0, main ="Histogram of 75 Percentile SAT", xlab = "75 Percentile SAT", xlim = c(500, 1600), ylim =c(0,400),labels=T)
+
+quantile(avg_sat0, probs= seq(0, 1, by = .1), na.rm =T)
+quantile(sat_25_0, probs= seq(.1, .9, by = .1), na.rm =T)
+quantile(sat_75_0, probs= seq(.1, .9, by = .1), na.rm =T)
+```
+
+# Distribution of City Population
+```{r}
+collegedata$population <- as.numeric(collegedata$population)
+population0 <- collegedata$population
+population0 <- na.omit(population0)
+
+quantile(population0, probs = seq(0.0, 1, by =0.05), na.rm=T)
+
+```
+
+# Distribution of Enrollment
+
+```{r}
+collegedata$college_enrollment <- as.numeric(collegedata$college_enrollment)
+enrollment0 <- collegedata$college_enrollment
+enrollment0 <- na.omit(enrollment0)
+
+hist(enrollment0, main = "Historgram of College Enrollment (Undergraduate)", xlab = "Enrollment", xlim=c(0,75000), ylim = c(0,1500))
+
+quantile(enrollment0, probs = seq(0.0, 1, by =0.05))
+```
+# Distribution of Collegiate Division
+
+```{r}
+collegedata$division <- as.factor(collegedata$division)
+division0 <- collegedata$division
+division0 <- na.omit(division0)
+
+plot(division0, main="Histogram of Collegiate Division", xlab="Division", ylab = "Frequency")
+```
+
+# Distribution of S/F Ratio
+
+```{r}
+collegedata$stu_facul_rat <- as.numeric(collegedata$stu_facul_rat)
+sfratio <- collegedata$stu_facul_rat
+sfratio <- na.omit(sfratio)
+
+hist(sfratio, main="Histogram of Student-Faculty Ratio", xlab="Student Faculty Ratio")
+
+quantile(sfratio, probs = seq(0.1, 0.9, by =0.1))
+```
+# Distribution of Out of State Percentage
+
+```{r}
+collegedata$out_state_undg <- as.numeric(collegedata$out_state_undg)
+out_state0 <- collegedata$out_state_undg
+out_state0 <- na.omit(out_state0)
+
+hist(out_state0, main = "Histogram of Out of State Percentage", xlab="Out of State Percentage")
+
+quantile(out_state0, probs = seq(0, 1, by = 0.1))
+```
+
+# Distribution of Avg. Freshman GPA
+
+```{r}
+collegedata$avg_fresh_gpa <- as.numeric(collegedata$avg_fresh_gpa)
+avg_frgpa0 <- collegedata$avg_fresh_gpa
+avg_frgpa0 <- na.omit(avg_frgpa0)
+
+hist(avg_frgpa0, main = "Histogram of Avg. Freshman GPA", xlab = "Avg. Freshman GPA")
+
+quantile(avg_frgpa0, probs = seq(0, 1, by = 0.1))
+```
+
+# Distribution of Percent Need Met
+```{r}
+collegedata$perc_stud_met <- as.numeric(collegedata$perc_stud_met)
+percstud0 <- collegedata$perc_stud_met
+percstud0 <- na.omit(percstud0)
+
+hist(percstud0, main = "Histogram of Percent of Student Need Met", xlab = "Percent of Student Need Met")
+
+quantile(percstud0, probs = seq(0.1, 0.9, by = 0.1))
+
+```
