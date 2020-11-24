@@ -1,4 +1,4 @@
-# IMR_Matchmaking
+# IMR Matchmaking
 Matchmaking Algorithm for IMRecruitable - Summer 2020 Internship
 
 # Matchmaking Algorithm
